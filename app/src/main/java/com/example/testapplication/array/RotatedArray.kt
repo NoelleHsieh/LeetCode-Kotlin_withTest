@@ -6,21 +6,33 @@ package com.example.testapplication.array
 * */
 
 class RotatedArray {
+
+    // find out that we should return Unit...
     fun solution(array: IntArray, k: Int): IntArray {
         if (k >= array.size || k == 0 || array.size == 1) return array
-        val answerArray = Array(array.size) { 0 }
-        var index = 0
-        for (i in 1..k) { // 1. Should start with 0
-            answerArray[k - i] = array[array.size - i] // 2. Should replace number at k - i
-            index++
+        val tailArray = Array(array.size - k) { 0 }
+        var tailIndex = array.size - k
+        for (i in 0 until tailIndex) {
+            tailArray[i] = array[i]
+            print(tailArray[i])
         }
-        for (i in 0 until (array.size - k)) {
-            answerArray[index + i] = array[i]
+        for (i in array.indices) {
+            if (i < k) {
+                array[i] = array[tailIndex]
+                tailIndex++
+            } else {
+                array[i] = tailArray[i - k]
+            }
         }
-        return answerArray.toIntArray()
+        return array
     }
 
     // Copy an array
     // Time Complexity O(2n)
     // Space Complexity O(n)
+
+    /*
+    Try to come up with as many solutions as you can. There are at least three different ways to solve this problem.
+    Could you do it in-place with O(1) extra space?
+    */
 }
