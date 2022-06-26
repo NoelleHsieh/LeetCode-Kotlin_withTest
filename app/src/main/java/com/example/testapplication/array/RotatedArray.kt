@@ -8,21 +8,20 @@ package com.example.testapplication.array
 class RotatedArray {
 
     // find out that we should return Unit...
+    // Misunderstood the k steps usage....
     fun solution(array: IntArray, k: Int): IntArray {
-        if (k >= array.size || k == 0 || array.size == 1) return array
-        val tailArray = Array(array.size - k) { 0 }
-        var tailIndex = array.size - k
-        for (i in 0 until tailIndex) {
+        if (k == 0 || array.size == 1 || array.size == k) return array
+        var divider = if(array.size > k) k else (k % array.size)
+        val tailArray = Array(array.size - divider) { 0 }
+        for (i in 0 until tailArray.size) {
             tailArray[i] = array[i]
-            print(tailArray[i])
         }
-        for (i in array.indices) {
-            if (i < k) {
-                array[i] = array[tailIndex]
-                tailIndex++
-            } else {
-                array[i] = tailArray[i - k]
-            }
+        println()
+        for (i in 0 until divider) {
+            array[i] = array[tailArray.size + i]
+        }
+        for (i in 0 until tailArray.size) {
+            array[i + divider] = tailArray[i]
         }
         return array
     }
